@@ -1,6 +1,9 @@
 if BOARD_HARPER_LEFT
 	config ZMK_KEYBOARD_NAME
-	default "Harper"
+		default "Harper"
+
+	config ZMK_USB
+		default y
 endif # BOARD_HARPER_LEFT
 
 if BOARD_HARPER_LEFT || BOARD_HARPER_RIGHT
@@ -14,14 +17,11 @@ if BOARD_HARPER_LEFT || BOARD_HARPER_RIGHT
 	menuconfig SENSOR
 		bool "Sensor Drivers"
 
-	config BT_CTLR
-		default BT
-
 	config ZMK_BLE
 		default y
 
-	config ZMK_USB
-		default y
+	config BT_CTLR
+		default BT
 
 	config ZMK_BATTERY_VOLTAGE_DIVIDER
 		default y
