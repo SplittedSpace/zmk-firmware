@@ -56,6 +56,7 @@
         zephyr,console = &cdc_acm_uart;
 		zmk,battery = &vbatt;
 		zmk,underglow = &led_strip;
+		zmk,led-widgets-dev = &leds;
 	};
 
 	default_transform: keymap_transform_0 {
@@ -79,6 +80,7 @@
 	kscan0: kscan {
 		compatible = "zmk,kscan-gpio-matrix";
 		diode-direction = "col2row";
+		wakeup-source;
 		row-gpios
 			= <&gpio0 28 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
 			, <&gpio0 31 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>
@@ -92,12 +94,11 @@
 
 	ext-power {
 		compatible = "zmk,ext-power-generic";
-		label = "EXT_POWER";
 		control-gpios = <&gpio0 29 GPIO_ACTIVE_LOW>;
 		init-delay-ms = <50>;
 	};
 
-	leds {
+	leds: leds {
 		compatible = "gpio-leds";
 		status_led: led_0 {
 			gpios = <&gpio1 11 (GPIO_ACTIVE_HIGH | GPIO_PULL_DOWN)>;
@@ -113,7 +114,6 @@
 		};
 	};
 
-
 	vbatt: vbatt {
 		compatible = "zmk,battery-voltage-divider";
 		io-channels = <&adc 0>;
@@ -122,18 +122,16 @@
 	};
 
 	left_encoder: encoder_left {
-		label = "Left Encoder";
 		compatible = "alps,ec11";
-		resolution = <2>;
+		steps = <2>;
 		a-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
 		b-gpios = <&gpio1  0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
 		status = "disabled";
 	};
 
 	right_encoder: encoder_right {
-		label = "Right Encoder";
 		compatible = "alps,ec11";
-		resolution = <2>;
+		steps = <2>;
 		a-gpios = <&gpio0 22 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
 		b-gpios = <&gpio1  0 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
 		status = "disabled";
@@ -143,8 +141,102 @@
 		compatible = "zmk,keymap-sensors";
 		sensors = <&left_encoder &right_encoder>;
 	};
-};
 
+
+
+	// led-widgets {
+    //     compatible = "zmk,led-widgets";
+    //     boot {
+    //         boot {
+    //             priority = <100>;
+    //             blue { len-ms = <100>; brightness = <0 0 50>; };
+    //             off { len-ms = <100>; };
+    //             blue2 { len-ms = <100>; brightness = <0 0 50>; };
+    //         };
+    //     };
+    //     battery {
+    //         low {
+    //             arg = <30>;
+    //             priority = <50>;
+    //             period-ms = <30000>;
+    //             green { len-ms = <100>; brightness = <0 20 0>; };
+    //             red { len-ms = <200>; brightness = <100 0 0>; };
+    //         };
+    //         mid {
+    //             arg = <70>;
+    //             priority = <50>;
+    //             period-ms = <30000>;
+    //             green { len-ms = <100>; brightness = <0 20 0>; };
+    //             yellow { len-ms = <200>; brightness = <100 100 0>; };
+    //         };
+    //         high {
+    //             arg = <100>;
+    //             priority = <50>;
+    //             period-ms = <30000>;
+    //             green { len-ms = <50>; brightness = <0 100 0>; };
+    //         };
+    //     };
+    //     layer {
+    //         lower {
+    //             arg = <1>;
+    //             priority = <20>;
+    //             stat { brightness = <0 0 20>; };
+    //         };
+    //         raise {
+    //             arg = <2>;
+    //             priority = <20>;
+    //             stat { brightness = <0 20 0>; };
+    //         };
+    //         game {
+    //             arg = <3>;
+    //             priority = <20>;
+    //             stat { brightness = <0 0 50>; };
+    //         };
+    //         steno {
+    //             arg = <4>;
+    //             priority = <20>;
+    //             stat { brightness = <50 0 0>; };
+    //         };
+    //     };
+    //     output {
+    //         usb {
+    //             arg = <0>;
+    //             priority = <100>;
+    //             stat { len-ms = <200>; brightness = <0 75 0>; };
+    //         };
+    //         ble {
+    //             arg = <1>;
+    //             priority = <100>;
+    //             stat { len-ms = <200>; brightness = <0 0 100>; };
+    //         };
+    //     };
+    //     profile {
+    //         0 {
+    //             arg = <0>;
+    //             priority = <90>;
+    //             head { len-ms = <50>; brightness = <0 0 50>; };
+    //             off { len-ms = <150>; };
+    //             tail { len-ms = <100>; brightness = <100 0 0>; };
+    //         };
+    //         1 {
+    //             arg = <1>;
+    //             priority = <90>;
+    //             head { len-ms = <50>; brightness = <0 0 50>; };
+    //             off { len-ms = <150>; };
+    //             tail { len-ms = <100>; brightness = <0 100 0>; };
+    //         };
+    //         2 {
+    //             arg = <2>;
+    //             priority = <90>;
+    //             head { len-ms = <50>; brightness = <0 0 50>; };
+    //             off { len-ms = <150>; };
+    //             tail { len-ms = <100>; brightness = <0 0 100>; };
+    //         };
+    //     };
+    // };
+
+
+};
 
 &adc {
 	status = "okay";

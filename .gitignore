@@ -11,3 +11,5 @@ app/venv/
 .vscode
 builds
 instructions.md
+.builds
+.vscode/settings.json

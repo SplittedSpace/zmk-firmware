@@ -1,0 +1,9 @@
+
+/ {
+    behaviors {
+        ind: indicators {
+            compatible = "zmk,behavior-indicators";
+            #binding-cells = <1>;
+        };
+    };
+};
